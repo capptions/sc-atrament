@@ -1,0 +1,83 @@
+<link rel="import" href="../polymer/polymer.html" />
+<script src="../atrament/dist/atrament.min.js"></script>
+
+<dom-module id="sc-atrament">
+  <template>
+    <canvas></canvas>
+  </template>
+</dom-module>
+
+<script>
+(function () {
+
+  window.Polymer({
+    is: 'sc-atrament',
+
+    properties: {
+      color: {
+        type: String,
+        value: '#000000',
+        observer: 'update'
+      },
+      mode: {
+        type: String,
+        value: 'draw',
+        observer: 'update'
+      },
+      weight: {
+        type: Number,
+        value: 3,
+        observer: 'update'
+      },
+      opacity: {
+        type: Number,
+        value: 1,
+        observer: 'update'
+      },
+      smoothing: {
+        type: Boolean,
+        value: true,
+        observer: 'update'
+      },
+      width: {
+        type: Number,
+        value: 500,
+        observer: 'render'
+      },
+      height: {
+        type: Number,
+        value: 500,
+        observer: 'render'
+      }
+    },
+
+    ready: function () {
+      this.render();
+    },
+
+    render: function () {
+      this._atrament = window.atrament(this.querySelector('canvas'), this.width, this.height);
+    },
+
+    update: function () {
+      if (!this._atrament) {
+        return;
+      }
+
+      ['color', 'mode', 'weight', 'opacity', 'smoothing'].forEach(function (key) {
+        this._atrament[key] = this[key];
+      }.bind(this));
+    },
+
+    clear: function () {
+      return this._atrament && this._atrament.clear();
+    },
+
+    getData: function () {
+      return this._atrament && this._atrament.toImage();
+    }
+
+  });
+
+})();
+</script>
