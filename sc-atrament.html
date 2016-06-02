@@ -3,7 +3,7 @@
 
 <dom-module id="sc-atrament">
   <template>
-    <canvas></canvas>
+    <canvas id="canvas"></canvas>
   </template>
 </dom-module>
 
@@ -56,7 +56,7 @@
     },
 
     render: function () {
-      this._atrament = window.atrament(this.querySelector('canvas'), this.width, this.height);
+      this._atrament = window.atrament(this.$.canvas, this.width, this.height);
     },
 
     update: function () {
