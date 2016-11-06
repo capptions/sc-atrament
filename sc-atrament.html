@@ -48,14 +48,27 @@
         type: Number,
         value: 500,
         observer: 'render'
+      },
+      dirty: {
+        type: Boolean,
+        value: false,
+        notify: true
       }
     },
 
     ready: function () {
+      this.$.canvas.addEventListener('dirty', function () {
+        this.set('dirty', this._atrament.dirty);
+      }.bind(this), false);
+
       this.render();
     },
 
     render: function () {
+      if (this._atrament) {
+        this._atrament.destroy();
+      }
+
       this._atrament = window.atrament(this.$.canvas, this.width, this.height);
       this.update();
     },
@@ -77,7 +90,6 @@
     getData: function () {
       return this._atrament && this._atrament.toImage();
     }
-
   });
 
 })();
